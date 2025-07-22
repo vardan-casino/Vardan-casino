@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vardan Casino - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-900 flex items-center justify-center min-h-screen text-white">
+  <div class="bg-red-800 p-8 rounded-xl shadow-lg w-full max-w-md">
+    <h1 class="text-3xl font-bold mb-6 text-center">Vardan Casino</h1>
+    <input id="user" type="text" placeholder="Username" class="w-full p-3 mb-4 rounded bg-red-700" />
+    <input id="pass" type="password" placeholder="Password" class="w-full p-3 mb-6 rounded bg-red-700" />
+    <button id="loginBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold p-3 rounded">Login</button>
+    <p class="mt-4 text-center">New? <a href="signup.html" class="text-yellow-300 underline">Sign Up</a></p>
+  </div>
+  <script>
+    document.getElementById('loginBtn').onclick = () => {
+      const u = document.getElementById('user').value;
+      const p = document.getElementById('pass').value;
+      if (u === 'vardan@5005' && p === '#5005vardan') {
+        localStorage.setItem('coins', 30);
+        localStorage.setItem('user',(u));
+        window.location = 'dashboard.html';
+      } else {
+        alert('Invalid credentials');
+      }
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vardan Casino - Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-900 flex items-center justify-center min-h-screen text-white">
+  <div class="bg-red-800 p-8 rounded-xl shadow-lg w-full max-w-md">
+    <h1 class="text-3xl font-bold mb-6 text-center">Create Account</h1>
+    <input id="user" type="text" placeholder="Username" class="w-full p-3 mb-4 rounded bg-red-700" />
+    <input id="pass" type="password" placeholder="Password" class="w-full p-3 mb-4 rounded bg-red-700" />
+    <button id="signupBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold p-3 rounded">Sign Up</button>
+    <p class="mt-4 text-center">Already have account? <a href="index.html" class="text-yellow-300 underline">Login</a></p>
+  </div>
+  <script>
+    document.getElementById('signupBtn').onclick = () => {
+      const u = document.getElementById('user').value;
+      const p = document.getElementById('pass').value;
+      if (u && p) {
+        localStorage.setItem('coins', 30);
+        localStorage.setItem('user',u);
+        localStorage.setItem('pass',p);
+        window.location = 'dashboard.html';
+      } else {
+        alert('Please enter both');
+      }
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vardan Casino - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-900 text-white min-h-screen">
+  <div class="p-4 flex justify-between items-center">
+    <div>
+      <p class="text-sm">Welcome, <span id="uname"></span></p>
+      <p class="text-lg">Coins: <span id="coins"></span></p>
+    </div>
+    <button id="logoutBtn" class="bg-yellow-400 text-black font-bold py-2 px-4 rounded">Logout</button>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 p-4">
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Ludo</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Card</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Dragon Tiger</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Chicken</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Pooks</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Car Race</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">IPL</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Teen Patti</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Slot Machine</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 p-4 rounded font-bold">Roulette</button>
+  </div>
+  <div class="p-4">
+    <input id="buyAmount" type="number" placeholder="Buy coins (₹)" class="w-2/3 p-2 rounded text-black" />
+    <button id="buyBtn" class="bg-green-500 hover:bg-green-600 p-3 rounded font-bold">Buy Coins</button>
+  </div>
+  <div class="p-4">
+    <a href="withdraw.html" class="bg-blue-500 hover:bg-blue-600 p-3 rounded font-bold">Withdraw Coins</a>
+  </div>
+
+  <script>
+    document.getElementById('logoutBtn').onclick = () => { localStorage.clear(); window.location='index.html'; };
+    const user = localStorage.getItem('user');
+    if (!user) return window.location = 'index.html';
+    document.getElementById('uname').innerText = user;
+    const updateBal = () => document.getElementById('coins').innerText = localStorage.getItem('coins') || 0;
+    updateBal();
+    document.getElementById('buyBtn').onclick = () => {
+      const amt = parseInt(document.getElementById('buyAmount').value);
+      if (amt > 0) {
+        const cur = parseInt(localStorage.getItem('coins') || 0);
+        localStorage.setItem('coins', cur + amt);
+        updateBal();
+      }
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Withdraw - Vardan Casino</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-900 text-white min-h-screen flex flex-col items-center p-4">
+  <h1 class="text-2xl font-bold mb-4">Withdraw Coins</h1>
+  <input id="upi" type="text" placeholder="Enter UPI ID" class="w-full max-w-md p-2 mb-4 rounded bg-red-700" />
+  <input id="bank" type="text" placeholder="Bank Account Number" class="w-full max-w-md p-2 mb-4 rounded bg-red-700" />
+  <input id="ifsc" type="text" placeholder="IFSC Code" class="w-full max-w-md p-2 mb-4 rounded bg-red-700" />
+  <input id="amt" type="number" placeholder="Amount (coins)" class="w-full max-w-md p-2 mb-4 rounded bg-red-700" />
+  <button id="wdBtn" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold p-3 rounded w-full max-w-md">Request Withdraw</button>
+  <button onclick="window.location='dashboard.html'" class="mt-4 text-blue-300 underline">Go Back</button>
+
+  <script>
+    document.getElementById('wdBtn').onclick = () => {
+      const upi = document.getElementById('upi').value,
+            bank = document.getElementById('bank').value,
+            ifsc = document.getElementById('ifsc').value,
+            amt = parseInt(document.getElementById('amt').value),
+            coins = parseInt(localStorage.getItem('coins')||0);
+      if (!upi || !bank || !ifsc || !amt || amt>coins) return alert('Please enter valid details and ensure sufficient coins.');
+      alert(`Withdraw Requested!\nUPI: ${upi}\nBank: ${bank}\nAmount: ${amt}`);
+      localStorage.setItem('coins', coins - amt);
+      window.location='dashboard.html';
+    };
+  </script>
+</body>
+</html>
